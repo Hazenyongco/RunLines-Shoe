@@ -1,0 +1,56 @@
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { Text, View, Image, StyleSheet, Touchable } from 'react-native';
+import { Link } from 'expo-router';
+
+export default function App() {
+  
+  return (
+    <View style={styles.container}>
+      {/*Logo */}
+      <Image 
+  source={{ uri: 'screenshot(36).png' }} 
+  style={styles.logo}
+/>
+
+      <View>
+        <Text style={styles.title}>RunLines Shoe.</Text>
+      </View>
+
+      <View>
+        <Link href="home" style={styles.link}>
+          Good Shoes take you Good Places!
+      </Link>
+
+     
+      </View>
+
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:  '#90CAF9',
+  },
+  logo: {
+    width: 100,   
+    height: 50,  
+    marginBottom: 10, 
+    resizeMode: 'contain', 
+  },
+  title: {
+    fontSize: 45,
+    fontFamily:  'Georgia',
+    color: '#ff',
+  },
+  link: {
+    color:  '#666',
+    fontSize: 17,
+    marginTop: 3,
+  },
+});
