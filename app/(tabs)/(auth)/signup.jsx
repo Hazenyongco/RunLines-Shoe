@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for the back button
 import { useRouter } from 'expo-router'; // For programmatic navigation
+import logo from '../../../assets/images/logo.png'; // Adjust the path based on your project structure
 
 const SignUpPage = () => {
   const [name, setName] = useState('');
@@ -25,8 +26,11 @@ const SignUpPage = () => {
         <Ionicons name="arrow-back" size={24} color="#333" />
       </TouchableOpacity>
 
+      {/* Logo */}
+      <Image source={logo} style={styles.logo} />
+
       <Text style={styles.header}>Sign Up</Text>
-      
+
       {/* Name Input */}
       <TextInput
         style={styles.input}
@@ -57,7 +61,7 @@ const SignUpPage = () => {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      {/* Link to Login page */}
+      {/* Link to Login Page */}
       <TouchableOpacity onPress={() => router.push('/login')} style={styles.link}>
         <Text style={styles.linkText}>Already have an account? Login</Text>
       </TouchableOpacity>
@@ -68,7 +72,7 @@ const SignUpPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F3',
+    backgroundColor: '#90CAF9',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -79,17 +83,24 @@ const styles = StyleSheet.create({
     left: 20,
     padding: 10,
   },
+  logo: {
+    width: 150,
+    height:200, 
+    marginBottom: 15,
+    marginTop: 40,
+    resizeMode: 'contain',
+  },
   header: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
     color: '#333',
   },
   input: {
     width: '100%',
     padding: 15,
     borderWidth: 1,
-    borderColor: '#CCC',
+    borderColor: '#333',
     borderRadius: 8,
     marginBottom: 15,
     backgroundColor: '#FFF',
@@ -112,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   linkText: {
-    color: '#4A90E2',
+    color: '#4A90E',
     fontSize: 14,
   },
 });

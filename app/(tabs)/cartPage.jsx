@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useLocalSearchParams, Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -7,10 +7,10 @@ const BuyNowPage = () => {
   const { name, imageUrl, type, price } = useLocalSearchParams();
 
   // Default values if parameters are undefined
-  const productName = name || 'Default Product Name';
-  const productImageUrl = imageUrl || 'https://via.placeholder.com/150'; // Fallback image URL
-  const productType = type || 'Default Product Type';
-  const productPrice = price || '0.00';
+  const productName = name || 'Nike InfinityRN 4';
+  const productImageUrl = imageUrl || 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/52fadde1-6b3e-4b2d-8a67-ae917f8bbe70/W+NIKE+REACTX+INFINITY+RUN+4.png'; // Fallback image URL
+  const productType = type || 'Nike';
+  const productPrice = price || '₱7,029';
 
   const [nameInput, setNameInput] = useState('');
   const [addressInput, setAddressInput] = useState('');
@@ -53,75 +53,90 @@ const BuyNowPage = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Header */}
-      <Text style={styles.header}>Buy Now</Text>
-
-      {/* Product Details */}
-      <View style={styles.productDetails}>
-        <Image source={{ uri: productImageUrl }} style={styles.image} />
-        <View style={styles.details}>
-          <Text style={styles.name}>{productName}</Text>
-          <Text style={styles.type}>{productType}</Text>
-          <Text style={styles.price}>${productPrice}</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+        {/* Header */}
+        <View style={styles.header}>
+          <Link href="/home" style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} />
+          </Link>
+          <Text style={styles.headerText}>Buy Now</Text>
         </View>
-      </View>
 
-      {/* Input Fields */}
-      <View style={styles.form}>
-        <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your name"
-          value={nameInput}
-          onChangeText={setNameInput}
-        />
-
-        <Text style={styles.label}>Address</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your address"
-          value={addressInput}
-          onChangeText={setAddressInput}
-          multiline
-        />
-
-        <Text style={styles.label}>Payment Method</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter payment method (e.g., Credit Card, PayPal)"
-          value={paymentMethod}
-          onChangeText={setPaymentMethod}
-        />
-      </View>
-
-      {/* Confirm Purchase Button */}
-      <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmPurchase}>
-        <Text style={styles.confirmButtonText}>Confirm Purchase</Text>
-      </TouchableOpacity>
-
-      {/* Back to Home */}
-      <Link href="/home" style={styles.backButton}>
-        <Text style={styles.confirmButtonText}>Back to Home</Text>
-      </Link>
-
-      {/* Animated Pop-Up */}
-      {isPopupVisible && (
-        <Animated.View style={[styles.popupContainer, { opacity: fadeAnim }]}>
-          <View style={styles.popup}>
-            <Text style={styles.popupText}>Order Complete!</Text>
+        {/* Product Details */}
+        <View style={styles.productDetails}>
+          <Image source={{ uri: productImageUrl }} style={styles.image} />
+          <View style={styles.details}>
+            <Text style={styles.name}>{productName}</Text>
+            <Text style={styles.type}>{productType}</Text>
+            <Text style={styles.price}>{productPrice}</Text>
           </View>
-        </Animated.View>
-      )}
-      
+        </View>
+
+        {/* Input Fields */}
+        <View style={styles.form}>
+          <Text style={styles.label}>Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your name"
+            value={nameInput}
+            onChangeText={setNameInput}
+          />
+
+          <Text style={styles.label}>Address</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your address"
+            value={addressInput}
+            onChangeText={setAddressInput}
+            multiline
+          />
+
+          <Text style={styles.label}>Payment Method</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter payment method (e.g., Credit Card, PayPal)"
+            value={paymentMethod}
+            onChangeText={setPaymentMethod}
+          />
+        </View>
+
+        {/* Confirm Purchase Button */}
+        <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmPurchase}>
+          <Text style={styles.confirmButtonText}>Confirm Purchase</Text>
+        </TouchableOpacity>
+
+        {/* Animated Pop-Up */}
+        {isPopupVisible && (
+          <Animated.View style={[styles.popupContainer, { opacity: fadeAnim }]}>
+            <View style={styles.popup}>
+              <Text style={styles.popupText}>Order Complete!</Text>
+            </View>
+          </Animated.View>
+        )}
+
+      </ScrollView>
+
+      {/* Bottom Navigation (fixed position) */}
       <View style={styles.bottomNav}>
-        <Link href="/home"> <Ionicons name="home" size={24} color="black" /> </Link>
-        <Link href="/Profile"> <Ionicons name="people" size={24} color="black" /> </Link>
-        <Link href="/cartPage"> <Ionicons name="cart" size={24} color="black" /> </Link>
-        <Link href="/settings"> <Ionicons name="settings" size={24} color="black" /> </Link>
+        <Link href="/home">
+          <Ionicons name="home" size={24} color="black" />
+        </Link>
+        <Link href="/Profile">
+          <Ionicons name="people" size={24} color="black" />
+        </Link>
+        <Link href="/cartPage">
+          <Ionicons name="cart" size={24} color="black" />
+        </Link>
+        <Link href="/settings">
+          <Ionicons name="settings" size={24} color="black" />
+        </Link>
       </View>
 
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -129,22 +144,33 @@ const BuyNowPage = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#FFF7F3',
+    backgroundColor: '#90CAF9',
     padding: 20,
+    paddingBottom: 80, 
   },
   header: {
-    fontSize: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 25,
+    marginTop: 15,
+  },
+  headerText: {
+    fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 30,
     color: '#333',
-    textAlign: 'center',
+    marginLeft: 1,
+  },
+  backButton: {
+    padding: 10,
+    borderRadius: 50,
+    marginRight: 15,
   },
   productDetails: {
     flexDirection: 'row',
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFEBEE',
     padding: 10,
     borderRadius: 10,
-    marginBottom: 30,
+    marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -204,13 +230,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  backButton: {
-    marginTop: 10,
-    padding: 15,
-    backgroundColor: '#4A90E2',
-    borderRadius: 10,
-    alignItems: 'center',
+    textAlign: 'center',
   },
   popupContainer: {
     position: 'absolute',

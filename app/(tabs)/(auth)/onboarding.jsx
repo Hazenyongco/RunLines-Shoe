@@ -1,22 +1,39 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { Link } from 'expo-router';
+import logo from '../../../assets/images/logo.png';
+import shoe from '../../../assets/images/shoe.png'; 
+
+
+const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen = () => (
   <View style={styles.container}>
-    {/* App Logo or Illustration */}
+    {/* Shoe Illustration */}
     <Image
-      source={{ uri: 'https://www.shutterstock.com/image-vector/running-shoe-icon-logo-design-260nw-2422032373.jpg' }}
-      style={styles.logo}
+      source={shoe}
+      style={[
+        styles.shoe,
+        { width: width * 0.90, height: height * 0.2 }, 
+      ]}
+    />
+
+    {/* App Logo */}
+    <Image
+      source={logo}
+      style={[
+        styles.logo,
+        { width: width * 0.90, height: width * 0.50 }, 
+      ]}
     />
 
     {/* Welcome Text */}
-    <Text style={styles.title}>Welcome to Your App!</Text>
+    <Text style={styles.title}>Explore New Release Shoes!</Text>
     <Text style={styles.subtitle}>
-      Discover, connect, and simplify your experience. Let's get started!
+      Advanced filters and sorting for effortless browsing
     </Text>
 
-    {/* Buttons for Login and Signup */}
+    {/* Buttons */}
     <View style={styles.buttonContainer}>
       <Link href="/login" style={styles.loginButton}>
         <Text style={styles.buttonText}>Login</Text>
@@ -33,54 +50,57 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFF7F3',
-    padding: 20,
+    backgroundColor: '#90CAF9',
+    paddingHorizontal: 20,
   },
-  logo: {
-    width: 200,
-    height: 150,
-    marginBottom: 30,
+  shoe: {
+    marginTop: 10,
+    marginBottom: 30, 
     resizeMode: 'contain',
   },
+  logo: {
+    marginBottom: 20, 
+    resizeMode: 'contain',
+    borderRadius: 10,
+    
+  },
   title: {
-    fontSize: 28,
+    fontSize: width * 0.07, 
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 30,
+    fontSize: width * 0.055, 
+    color: '#66',
+    marginBottom: 15,
     textAlign: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '100%',
   },
   loginButton: {
-    flex: 1,
     backgroundColor: '#4A90E2',
-    padding: 15,
+    paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginRight: 10,
+    marginBottom: 10,
+    width: '100%',
   },
   signupButton: {
-    flex: 1,
     backgroundColor: '#4CAF50',
-    padding: 15,
+    paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginLeft: 10,
+    width: '100%',
   },
   buttonText: {
     color: '#FFF',
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

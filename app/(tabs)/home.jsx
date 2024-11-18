@@ -1,210 +1,208 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 
-const PetSitApp = () => {
-  const [filter, setFilter] = useState('All');
+const Home = () => {
+  const [query, setQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const router = useRouter();
 
   const items = [
     { id: 1, name: 'Nike InfinityRN 4', type: 'Nike', price: '₱7,029', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/52fadde1-6b3e-4b2d-8a67-ae917f8bbe70/W+NIKE+REACTX+INFINITY+RUN+4.png' },
-    { id: 2, name: 'Nike Pegasus EasyOn Electric', type: 'Nike', price: '₱7,029', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/f9316648-fbd5-4087-b3e4-d6da064c27d6/NIKE+REACTX+INFINITY+RUN+4+OLY.png' },
-    { id: 3, name: 'Nike Vomero 17', type: 'Nike', price: '₱7,029',imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/2f77b9d8-c7dc-49eb-af5c-d693189f943b/W+NIKE+VOMERO+17.png' },
-    { id: 4, name: 'Samba OG Shoes', type: 'Adidas', price: '₱7,029', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/3bbecbdf584e40398446a8bf0117cf62_9366/Samba_OG_Shoes_White_B75806_01_00_standard.jpg' },
-    { id: 5, name: 'Runfalcon 5', type: 'Adidas', price: '₱7,029', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/da959c7d017e4779929912540530f014_9366/Runfalcon_5_Running_Shoes_Black_IE8816_01_standard.jpg' },
-    { id: 6, name: 'Campus 00s Shoes', type: 'Adidas', price: '₱7,029', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/4659ee058ba34bd2a5d0af500104c17d_9366/Campus_00s_Shoes_Black_HQ8708_01_standard.jpg' },
-    { id: 7, name: 'Reebok Court Advance', type: 'Other', price: '₱7,029', imageUrl: 'https://reebok.ph/cdn/shop/files/courtadvnceblack-_1.png?v=1693886309&width=823' },
+    { id: 2, name: 'Nike Pegasus EasyOn Electric', type: 'Nike', price: '₱7,999', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/f9316648-fbd5-4087-b3e4-d6da064c27d6/NIKE+REACTX+INFINITY+RUN+4+OLY.png' },
+    { id: 3, name: 'Nike Vomero 17', type: 'Nike', price: '₱8,789', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/2f77b9d8-c7dc-49eb-af5c-d693189f943b/W+NIKE+VOMERO+17.png' },
+    { id: 4, name: 'Nike Pegasus 41', type: 'Nike', price: '₱7,395', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/8a0e435e-bafe-4b7d-a8a0-c2d3a951cef2/W+AIR+ZOOM+PEGASUS+41.png' },
+    { id: 5, name: 'Samba OG Shoes', type: 'Adidas', price: '₱6,567', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/3bbecbdf584e40398446a8bf0117cf62_9366/Samba_OG_Shoes_White_B75806_01_00_standard.jpg' },
+    { id: 6, name: 'Runfalcon 5', type: 'Adidas', price: '₱8,234', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/da959c7d017e4779929912540530f014_9366/Runfalcon_5_Running_Shoes_Black_IE8816_01_standard.jpg' },
+    { id: 7, name: 'Campus 00s Shoes', type: 'Adidas', price: '₱5,129', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/4659ee058ba34bd2a5d0af500104c17d_9366/Campus_00s_Shoes_Black_HQ8708_01_standard.jpg' },
+    { id: 8, name: 'Anthony Edwards 1 Low Basketball', type: 'Adidas', price: '₱5,300', imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2c4e8087a4ef441aaa4808474c03985d_9366/Anthony_Edwards_1_Low_Basketball_Shoes_Kids_Red_JI4076_01_00_standard.jpg' },
+    { id: 9, name: 'Tatum 3 "Welcome to the Garden"', type: 'Jordan', price: '₱7,784', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/7347a6ea-f9f6-4024-be90-360a713e2fd5/JORDAN+TATUM+3.png' },
+    { id: 10, name: 'Air Jordan XXXIX "Lumière"', type: 'Jordan', price: '₱6,567', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/6dd32f84-3fe4-4976-b7db-16962c2f98cc/AIR+JORDAN+XXXIX.png' },
+    { id: 11, name: 'Luka 3 "Imaginarium"', type: 'Jordan', price: '₱8,786', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/8b1275d2-885f-48a9-9b2f-d09479fd8a5d/JORDAN+LUKA+3.png' },
+    { id: 12, name: 'Jumpman MVP', type: 'Jordan', price: '₱7,655', imageUrl: 'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/4121fcbc-b7cd-49a9-846b-d77932f08fc2/WMNS+JORDAN+MVP.png' },
   ];
 
-  // Filter items based on selected filter
-  const filteredItems = items.filter((item) => filter === 'All' || item.type === filter);
+  const filteredItems = items.filter((item) => {
+    const matchesCategory = selectedCategory === 'All' || item.type === selectedCategory;
+    const matchesQuery = item.name.toLowerCase().includes(query.toLowerCase());
+    return matchesCategory && matchesQuery;
+  });
+
+  const getBackgroundColor = (index) => {
+    const colors = ['#FFEBEE', '#E3F2FD', '#E8F5E9', '#FFF3E0', '#F3E5F5'];
+    return colors[index % colors.length];
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleDetailsPress = (item) => {
+    router.push({
+      pathname: '/itemDetails',
+      params: {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        imageUrl: item.imageUrl,
+        type: item.type,
+      },
+    });
+  };
+
+  const renderItem = ({ item, index }) => (
+    <View style={[styles.itemContainer, { backgroundColor: getBackgroundColor(index) }]}>
+      <Image source={{ uri: item.imageUrl }} style={styles.itemImage} />
+      <Text style={styles.itemTitle}>{item.name}</Text>
+      <Text style={styles.itemPrice}>{item.price}</Text>
+      <TouchableOpacity
+        style={styles.detailsButton}
+        onPress={() => handleDetailsPress(item)}
+      >
+        <Text style={styles.detailsButtonText}>Details</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>RunLines Shoe</Text>
+      <Text style={styles.title}>Explore for your next shoe.</Text>
+      <Text style={styles.subtitle}>Experience Fashion with Our Shoe Lineup</Text>
+
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search for Products"
+        value={query}
+        onChangeText={setQuery}
+      />
+
+      <View style={styles.categoryContainer}>
+        {['All', 'Nike', 'Adidas', 'Jordan'].map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[styles.categoryButton, selectedCategory === category && styles.selectedCategory]}
+            onPress={() => handleCategorySelect(category)}
+          >
+            <Text style={styles.categoryText}>{category}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
-      
-      <ScrollView style={styles.scrollContainer}>
-        {/* Greeting and heading */}
-        <Text style={styles.greeting}>Hello, Hazen!</Text>
-        <Text style={styles.heading}>Experience Fashion with Our Shoe Lineup</Text>
 
-        {/* Search Input */}
-        <TextInput style={styles.searchInput} placeholder="Search for items..." />
+      <FlatList
+        data={filteredItems}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+      />
 
-        {/* Filter Buttons */}
-        <View style={styles.filterButtons}>
-          {['All', 'Adidas', 'Nike', 'Other'].map((type) => (
-            <TouchableOpacity
-              key={type}
-              style={[styles.filterButton, filter === type && styles.activeFilterButton]}
-              onPress={() => setFilter(type)}
-            >
-              <Text style={filter === type ? styles.activeFilterText : styles.filterText}>{type}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Items Cards */}
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item) => (
-            <View key={item.id} style={styles.itemCard}>
-              <Image source={{ uri: item.imageUrl }} style={styles.itemImage} />
-              <View style={styles.itemInfo}>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemDetails}>{item.type}</Text>
-                <Text style={styles.itemPrice}>Price {item.price}</Text>
-              </View>
-              <Link
-                href={`/itemDetails?name=${item.name}&imageUrl=${item.imageUrl}&type=${item.type}&price=${item.price}`}
-                asChild
-              >
-                <TouchableOpacity style={styles.bookButton}>
-                  <Text style={styles.bookButtonText}>Details</Text>
-                </TouchableOpacity>
-              </Link>
-            </View>
-          ))
-        ) : (
-          <Text style={styles.noItemsText}>No items available for the selected filter.</Text>
-        )}
-      </ScrollView>
-
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation Bar */}
       <View style={styles.bottomNav}>
-        <Link href="/home"> <Ionicons name="home" size={24} color="black" /> </Link>
-        <Link href="/Profile"> <Ionicons name="people" size={24} color="black" /> </Link>
-        <Link href="/cartPage"> <Ionicons name="cart" size={24} color="black" /> </Link>
-        <Link href="/settings"> <Ionicons name="settings" size={24} color="black" /> </Link>
+        <Link href="/home">
+          <Ionicons name="home" size={24} color="black" />
+        </Link>
+        <Link href="/Profile">
+          <Ionicons name="people" size={24} color="black" />
+        </Link>
+        <Link href="/cartPage">
+          <Ionicons name="cart" size={24} color="black" />
+        </Link>
+        <Link href="/settings">
+          <Ionicons name="settings" size={24} color="black" />
+        </Link>
       </View>
     </View>
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFF', // Light pastel blue background
-    padding: 15,
+    padding: 10,
+    backgroundColor: '#90CAF9',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-    justifyContent: 'flex-start',
-  },
-  backButton: {
-    marginRight: 10,
-  },
-  headerTitle: {
-    fontSize: 24,
+  title: {
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#3A3A3A',
-  },
-  scrollContainer: {
-    flex: 1,
-  },
-  greeting: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#5C6BC0',
     marginBottom: 10,
+    marginTop: 20,
   },
-  heading: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#4A90E2',
+  subtitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111',
     marginBottom: 20,
   },
   searchInput: {
-    borderWidth: 1.5,
-    borderColor: '#B3C7E6',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    marginBottom: 20,
-    backgroundColor: '#FFF',
-    fontSize: 16,
+    width: '100%',
+    padding: 10,
+    borderRadius: 10,
+    borderColor: '#ddd',
+    borderWidth: 2,
+    marginBottom: 15,
   },
-  filterButtons: {
+  categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  filterButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    backgroundColor: '#F4A1C1',
-    borderRadius: 25,
-    elevation: 2, // Adds a slight shadow effect to the buttons
-  },
-  activeFilterButton: {
-    backgroundColor: '#B6A4D2',
-  },
-  filterText: {
-    fontSize: 16,
-    color: '#fff',
-  },
-  activeFilterText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  itemCard: {
-    flexDirection: 'row',
-    backgroundColor: '#FFF',
     marginBottom: 15,
-    padding: 15,
-    borderRadius: 12,
+  },
+  categoryButton: {
+    flex: 1,
+    padding: 10,
+    marginHorizontal: 4,
+    backgroundColor: '#ddd',
+    borderRadius: 25,
     alignItems: 'center',
-    shadowColor: '#B0BEC5',
+  },
+  selectedCategory: {
+    backgroundColor: '#58788D',
+  },
+  categoryText: {
+    color: '#3C2F2F',
+    fontWeight: 'bold',
+  },
+  itemContainer: {
+    padding: 10,
+    marginBottom: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    elevation: 3,
+    elevation: 2,
+    flex: 0.5,
   },
   itemImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 12,
-    marginRight: 15,
+    width: '100%',
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 10,
   },
-  itemInfo: {
-    flex: 1,
-  },
-  itemName: {
+  itemTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#4A4A4A',
-  },
-  itemDetails: {
-    fontSize: 14,
-    color: '#9E9E9E',
-    marginTop: 4,
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#4A4A4A',
-    marginTop: 6,
+    marginTop: 4,
   },
-  bookButton: {
-    backgroundColor: '#B6A4D2',
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    borderRadius: 20,
+  detailsButton: {
+    marginTop: 10,
+    backgroundColor: '#FF5722',
+    paddingVertical: 5,
+    borderRadius: 5,
+    alignItems: 'center',
   },
-  bookButtonText: {
-    fontSize: 16,
+  detailsButtonText: {
     color: '#FFF',
     fontWeight: 'bold',
   },
-  noItemsText: {
-    fontSize: 16,
-    color: '#9E9E9E',
-    textAlign: 'center',
-    marginTop: 20,
+  row: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   bottomNav: {
     position: 'absolute',
@@ -220,6 +218,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
+  navButton: {
+    padding: 10,
+  },
+  navButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#3C2F2F',
+  },
 });
 
-export default PetSitApp;
+export default Home;

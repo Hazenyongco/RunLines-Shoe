@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Modal } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Modal, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router'; // Import useRouter
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('johndoe@example.com');
-  const [address, setAddress] = useState('123 Main Street, Cityville');
+  const [name, setName] = useState('Quennie Hazen Yongco');
+  const [email, setEmail] = useState('quenniehazenyongco@gmail.com');
+  const [address, setAddress] = useState('Ilihan Toledo City');
+  const [age, setAge] = useState('20');
+  const [sex, setSex] = useState('Female');
   const [isModalVisible, setIsModalVisible] = useState(false);
   
   // Initialize useRouter
@@ -38,73 +40,76 @@ const ProfilePage = () => {
         <Text style={styles.headerText}>Profile</Text>
       </View>
 
-      {/* Profile Picture */}
-      <View style={styles.profilePicContainer}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/150' }}
-          style={styles.profilePic}
-        />
-      </View>
-
-      {/* User Details */}
-      <View style={styles.detailsContainer}>
-        <Text style={styles.label}>Name:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={(text) => setName(text)}
+      {/* Scrollable Content */}
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Profile Picture */}
+        <View style={styles.profilePicContainer}>
+          <Image
+            source={{ uri: 'https://i.pinimg.com/736x/4a/50/3a/4a503a0e76c1a3a0843d26deb6597d37.jpg' }}
+            style={styles.profilePic}
           />
-        ) : (
-          <Text style={styles.value}>{name}</Text>
-        )}
+        </View>
 
-        <Text style={styles.label}>Email:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        ) : (
-          <Text style={styles.value}>{email}</Text>
-        )}
+        {/* User Details */}
+        <View style={styles.detailsContainer}>
+          <Text style={styles.label}>Name:</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+          ) : (
+            <Text style={styles.value}>{name}</Text>
+          )}
 
-        <Text style={styles.label}>Address:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={address}
-            onChangeText={(text) => setAddress(text)}
-            multiline
-          />
-        ) : (
-          <Text style={styles.value}>{address}</Text>
-        )}
-      </View>
+          <Text style={styles.label}>Email:</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
+          ) : (
+            <Text style={styles.value}>{email}</Text>
+          )}
 
-      {/* Action Buttons */}
-      <View style={styles.buttonContainer}>
-        {isEditing ? (
-          <TouchableOpacity style={styles.saveButton} onPress={saveProfile}>
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableOpacity>
-        ) : (
+          <Text style={styles.label}>Address:</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.input}
+              value={address}
+              onChangeText={(text) => setAddress(text)}
+              multiline
+            />
+          ) : (
+            <Text style={styles.value}>{address}</Text>
+          )}
+        </View>
+
+        {/* Action Buttons */}
+        <View style={styles.buttonContainer}>
+          {isEditing ? (
+            <TouchableOpacity style={styles.saveButton} onPress={saveProfile}>
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => setIsEditing(true)}
+            >
+              <Text style={styles.buttonText}>Edit Profile</Text>
+            </TouchableOpacity>
+          )}
+
           <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => setIsEditing(true)}
+            style={styles.logoutButton}
+            onPress={() => setIsModalVisible(true)}
           >
-            <Text style={styles.buttonText}>Edit Profile</Text>
+            <Text style={styles.buttonText}>Logout</Text>
           </TouchableOpacity>
-        )}
-
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => setIsModalVisible(true)}
-        >
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </ScrollView>
 
       {/* Logout Modal */}
       <Modal
@@ -157,13 +162,14 @@ const ProfilePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F3',
+    backgroundColor: '#90CAF9',
     padding: 20,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 15,
   },
   headerText: {
     fontSize: 24,
@@ -173,7 +179,7 @@ const styles = StyleSheet.create({
   },
   profilePicContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
   },
   profilePic: {
     width: 150,
@@ -212,6 +218,9 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
+    width: '100%',
+    textAlign: 'center',
+    alignItems: 'center',
   },
   saveButton: {
     backgroundColor: '#4CAF50',
@@ -223,7 +232,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#E94E77',
     padding: 15,
     borderRadius: 8,
-    marginTop: 10,
+    marginTop: 5,
+    width: '100%',
+    textAlign: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: '#FFF',
@@ -283,6 +295,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
+  scrollContainer: {
+    paddingBottom: 80, // Adjust if needed
+  }
 });
 
 export default ProfilePage;

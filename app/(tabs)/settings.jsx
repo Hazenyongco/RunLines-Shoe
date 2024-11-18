@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Switch, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Switch, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-
 
 const SettingsPage = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -32,64 +31,73 @@ const SettingsPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-
-      {/* Notifications */}
-      <View style={styles.settingRow}>
-        <Text style={styles.settingText}>Enable Notifications</Text>
-        <Switch
-          value={notificationsEnabled}
-          onValueChange={toggleNotifications}
-        />
+      {/* Settings Header */}
+      <View style={styles.header}>
+        <Link href="/home" style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#444" />
+        </Link>
+        <Text style={styles.headerText}>Settings</Text>
       </View>
 
-      {/* Dark Mode */}
-      <View style={styles.settingRow}>
-        <Text style={styles.settingText}>Dark Mode</Text>
-        <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
-      </View>
+      {/* Scrollable Content */}
+      <ScrollView contentContainerStyle={styles.content}>
+        {/* Notifications */}
+        <View style={styles.settingRow}>
+          <Text style={styles.settingText}>Enable Notifications</Text>
+          <Switch
+            value={notificationsEnabled}
+            onValueChange={toggleNotifications}
+          />
+        </View>
 
-      {/* Location Access */}
-      <View style={styles.settingRow}>
-        <Text style={styles.settingText}>Location Access</Text>
-        <Switch
-          value={locationAccessEnabled}
-          onValueChange={toggleLocationAccess}
-        />
-      </View>
+        {/* Dark Mode */}
+        <View style={styles.settingRow}>
+          <Text style={styles.settingText}>Dark Mode</Text>
+          <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
+        </View>
 
-      {/* Account Settings */}
-      <TouchableOpacity style={styles.settingButton}>
-        <Text style={styles.buttonText}>Edit Account Information</Text>
-      </TouchableOpacity>
+        {/* Location Access */}
+        <View style={styles.settingRow}>
+          <Text style={styles.settingText}>Location Access</Text>
+          <Switch
+            value={locationAccessEnabled}
+            onValueChange={toggleLocationAccess}
+          />
+        </View>
 
-      <TouchableOpacity style={styles.settingButton}>
-        <Text style={styles.buttonText}>Change Password</Text>
-      </TouchableOpacity>
+        {/* Account Settings */}
+        <TouchableOpacity style={styles.settingButton}>
+          <Text style={styles.buttonText}>Edit Account Information</Text>
+        </TouchableOpacity>
 
-      {/* App Preferences */}
-      <TouchableOpacity style={styles.settingButton}>
-        <Text style={styles.buttonText}>Manage Subscriptions</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.settingButton}>
+          <Text style={styles.buttonText}>Change Password</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.settingButton}>
-        <Text style={styles.buttonText}>Language Settings</Text>
-      </TouchableOpacity>
+        {/* App Preferences */}
+        <TouchableOpacity style={styles.settingButton}>
+          <Text style={styles.buttonText}>Manage Subscriptions</Text>
+        </TouchableOpacity>
 
-      {/* Privacy and Terms */}
-      <TouchableOpacity
-        style={styles.linkButton}
-        onPress={handlePrivacyPolicy}
-      >
-        <Text style={styles.linkText}>Privacy Policy</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.settingButton}>
+          <Text style={styles.buttonText}>Language Settings</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.linkButton}
-        onPress={handleTermsOfService}
-      >
-        <Text style={styles.linkText}>Terms of Service</Text>
-      </TouchableOpacity>
+        {/* Privacy and Terms */}
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={handlePrivacyPolicy}
+        >
+          <Text style={styles.linkText}>Privacy Policy</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={handleTermsOfService}
+        >
+          <Text style={styles.linkText}>Terms of Service</Text>
+        </TouchableOpacity>
+      </ScrollView>
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
@@ -98,22 +106,36 @@ const SettingsPage = () => {
         <Link href="/cartPage"> <Ionicons name="cart" size={24} color="black" /> </Link>
         <Link href="/settings"> <Ionicons name="settings" size={24} color="black" /> </Link>
       </View>
-
     </View>
-  
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: '#90CAF9',
   },
-  title: {
-    fontSize: 24,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    marginTop: 30,
+    paddingHorizontal: 20,
+  },
+  headerText: {
+    fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#444',
+    marginLeft: 15,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 1,
+  },
+  content: {
+    paddingHorizontal: 20,
+    paddingBottom: 80, // Make sure there's space for the bottom navigation
   },
   settingRow: {
     flexDirection: 'row',
@@ -122,22 +144,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: '#333',
   },
   settingText: {
     fontSize: 16,
   },
   settingButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#FFEBEE',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 15,
   },
   buttonText: {
-    color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'semi-bold',
   },
   linkButton: {
     marginVertical: 10,
