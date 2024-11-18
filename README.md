@@ -17,7 +17,7 @@ RunLines Mobile App.
 * React Native with Expo
 * HTML, CSS and JS
 
-# Home Screen
+# Onboarding Screen
 <img src="assets/images/onboarding.jpg">  
 
 # Sign Up Screen
