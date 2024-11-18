@@ -18,19 +18,19 @@ RunLines Mobile App.
 * HTML, CSS and JS
 
 # Home Screen
-<img src="assets/images/onboarding.JPG">  
+<img src="assets/images/onboarding.jpg">  
 
 # Sign Up Screen
-<img src="assets/images/signup.JPG">  
+<img src="assets/images/signup.jpg">  
 
 # Log In Screen
-<img src="assets/images/login.JPG">  
+<img src="assets/images/login.jpg">  
 
 # Tabs Screen
-<img src="assets/images/home.png">  
-<img src="assets/images/profile.png">  
-<img src="assets/images/cart.png">  
-<img src="assets/images/settings.png">  
+<img src="assets/images/home.jpg">  
+<img src="assets/images/profile.jpg">  
+<img src="assets/images/cart.jpg">  
+<img src="assets/images/settings.jpg">  
 
 # RunLines run-through
 * Video - (https://youtu.be/75VbbeI_qlc)
